@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/udistrital/programa_academico_crud/models"
 	"encoding/json"
 	"errors"
+	"github.com/udistrital/programa_academico_crud/models"
 	"strconv"
 	"strings"
 
@@ -27,7 +27,7 @@ func (c *MetodologiaController) URLMapping() {
 // @Description create Metodologia
 // @Param	body		body 	models.Metodologia	true		"body for Metodologia content"
 // @Success 201 {int} models.Metodologia
-// @Failure 403 body is empty
+// @Failure 400 the request contains incorrect syntax
 // @router / [post]
 func (c *MetodologiaController) Post() {
 	var v models.Metodologia
@@ -36,10 +36,12 @@ func (c *MetodologiaController) Post() {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = v
 		} else {
-			c.Data["json"] = err.Error()
+			beego.Error(err)
+			c.Abort("400")
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		beego.Error(err)
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
@@ -71,7 +73,7 @@ func (c *MetodologiaController) GetOne() {
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
 // @Success 200 {object} models.Metodologia
-// @Failure 403
+// @Failure 404 not found resource
 // @router / [get]
 func (c *MetodologiaController) GetAll() {
 	var fields []string
@@ -117,8 +119,12 @@ func (c *MetodologiaController) GetAll() {
 
 	l, err := models.GetAllMetodologia(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		beego.Error(err)
+		c.Abort("404")
 	} else {
+		if l == nil {
+			l = append(l, map[string]interface{}{})
+		}
 		c.Data["json"] = l
 	}
 	c.ServeJSON()
@@ -151,15 +157,16 @@ func (c *MetodologiaController) Put() {
 // @Description delete the Metodologia
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
-// @Failure 403 id is empty
+// @Failure 404 not found resource
 // @router /:id [delete]
 func (c *MetodologiaController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteMetodologia(id); err == nil {
-		c.Data["json"] = "OK"
+		c.Data["json"] = map[string]interface{}{"Id": id}
 	} else {
-		c.Data["json"] = err.Error()
+		beego.Error(err)
+		c.Abort("404")
 	}
 	c.ServeJSON()
 }

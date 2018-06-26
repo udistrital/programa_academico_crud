@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/udistrital/programa_academico_crud/models"
 	"encoding/json"
 	"errors"
+	"github.com/udistrital/programa_academico_crud/models"
 	"strconv"
 	"strings"
 
@@ -27,7 +27,7 @@ func (c *NivelFormacionController) URLMapping() {
 // @Description create NivelFormacion
 // @Param	body		body 	models.NivelFormacion	true		"body for NivelFormacion content"
 // @Success 201 {int} models.NivelFormacion
-// @Failure 403 body is empty
+// @Failure 400 the request contains incorrect syntax
 // @router / [post]
 func (c *NivelFormacionController) Post() {
 	var v models.NivelFormacion
@@ -36,10 +36,12 @@ func (c *NivelFormacionController) Post() {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = v
 		} else {
-			c.Data["json"] = err.Error()
+			beego.Error(err)
+			c.Abort("400")
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		beego.Error(err)
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
@@ -71,7 +73,7 @@ func (c *NivelFormacionController) GetOne() {
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
 // @Success 200 {object} models.NivelFormacion
-// @Failure 403
+// @Failure 404 not found resource
 // @router / [get]
 func (c *NivelFormacionController) GetAll() {
 	var fields []string
@@ -117,8 +119,12 @@ func (c *NivelFormacionController) GetAll() {
 
 	l, err := models.GetAllNivelFormacion(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		beego.Error(err)
+		c.Abort("404")
 	} else {
+		if l == nil {
+			l = append(l, map[string]interface{}{})
+		}
 		c.Data["json"] = l
 	}
 	c.ServeJSON()
@@ -151,15 +157,16 @@ func (c *NivelFormacionController) Put() {
 // @Description delete the NivelFormacion
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
-// @Failure 403 id is empty
+// @Failure 404 not found resource
 // @router /:id [delete]
 func (c *NivelFormacionController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteNivelFormacion(id); err == nil {
-		c.Data["json"] = "OK"
+		c.Data["json"] = map[string]interface{}{"Id": id}
 	} else {
-		c.Data["json"] = err.Error()
+		beego.Error(err)
+		c.Abort("404")
 	}
 	c.ServeJSON()
 }
