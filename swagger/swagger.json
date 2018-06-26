@@ -1,0 +1,838 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "beego Test API",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://beego.me/",
+        "contact": {
+            "email": "astaxie@gmail.com"
+        },
+        "license": {
+            "name": "Url http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/metodologia/": {
+            "get": {
+                "tags": [
+                    "metodologia"
+                ],
+                "summary": "get Metodologia",
+                "operationId": "MetodologiaController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fields",
+                        "description": "Fields returned. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sortby",
+                        "description": "Sorted-by fields. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.Metodologia",
+                        "schema": {
+                            "$ref": "#/definitions/Metodologia"
+                        }
+                    },
+                    "403": {}
+                }
+            },
+            "post": {
+                "tags": [
+                    "metodologia"
+                ],
+                "summary": "create Metodologia",
+                "operationId": "MetodologiaController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Metodologia content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Metodologia"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "models.Metodologia"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/metodologia/{id}": {
+            "get": {
+                "tags": [
+                    "metodologia"
+                ],
+                "summary": "get Metodologia by id",
+                "operationId": "MetodologiaController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.Metodologia",
+                        "schema": {
+                            "$ref": "#/definitions/Metodologia"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "metodologia"
+                ],
+                "summary": "update the Metodologia",
+                "operationId": "MetodologiaController.Update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Metodologia content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Metodologia"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.Metodologia",
+                        "schema": {
+                            "$ref": "#/definitions/Metodologia"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "metodologia"
+                ],
+                "summary": "delete the Metodologia",
+                "operationId": "MetodologiaController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        },
+        "/nivel_formacion/": {
+            "get": {
+                "tags": [
+                    "nivel_formacion"
+                ],
+                "summary": "get NivelFormacion",
+                "operationId": "NivelFormacionController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fields",
+                        "description": "Fields returned. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sortby",
+                        "description": "Sorted-by fields. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.NivelFormacion",
+                        "schema": {
+                            "$ref": "#/definitions/NivelFormacion"
+                        }
+                    },
+                    "403": {}
+                }
+            },
+            "post": {
+                "tags": [
+                    "nivel_formacion"
+                ],
+                "summary": "create NivelFormacion",
+                "operationId": "NivelFormacionController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for NivelFormacion content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NivelFormacion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "models.NivelFormacion"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/nivel_formacion/{id}": {
+            "get": {
+                "tags": [
+                    "nivel_formacion"
+                ],
+                "summary": "get NivelFormacion by id",
+                "operationId": "NivelFormacionController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.NivelFormacion",
+                        "schema": {
+                            "$ref": "#/definitions/NivelFormacion"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "nivel_formacion"
+                ],
+                "summary": "update the NivelFormacion",
+                "operationId": "NivelFormacionController.Update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for NivelFormacion content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NivelFormacion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.NivelFormacion",
+                        "schema": {
+                            "$ref": "#/definitions/NivelFormacion"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "nivel_formacion"
+                ],
+                "summary": "delete the NivelFormacion",
+                "operationId": "NivelFormacionController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        },
+        "/programa_academico/": {
+            "get": {
+                "tags": [
+                    "programa_academico"
+                ],
+                "summary": "get ProgramaAcademico",
+                "operationId": "ProgramaAcademicoController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fields",
+                        "description": "Fields returned. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sortby",
+                        "description": "Sorted-by fields. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.ProgramaAcademico",
+                        "schema": {
+                            "$ref": "#/definitions/ProgramaAcademico"
+                        }
+                    },
+                    "403": {}
+                }
+            },
+            "post": {
+                "tags": [
+                    "programa_academico"
+                ],
+                "summary": "create ProgramaAcademico",
+                "operationId": "ProgramaAcademicoController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for ProgramaAcademico content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ProgramaAcademico"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "models.ProgramaAcademico"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/programa_academico/{id}": {
+            "get": {
+                "tags": [
+                    "programa_academico"
+                ],
+                "summary": "get ProgramaAcademico by id",
+                "operationId": "ProgramaAcademicoController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.ProgramaAcademico",
+                        "schema": {
+                            "$ref": "#/definitions/ProgramaAcademico"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "programa_academico"
+                ],
+                "summary": "update the ProgramaAcademico",
+                "operationId": "ProgramaAcademicoController.Update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for ProgramaAcademico content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ProgramaAcademico"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.ProgramaAcademico",
+                        "schema": {
+                            "$ref": "#/definitions/ProgramaAcademico"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "programa_academico"
+                ],
+                "summary": "delete the ProgramaAcademico",
+                "operationId": "ProgramaAcademicoController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        },
+        "/titulacion/": {
+            "get": {
+                "tags": [
+                    "titulacion"
+                ],
+                "summary": "get Titulacion",
+                "operationId": "TitulacionController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fields",
+                        "description": "Fields returned. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sortby",
+                        "description": "Sorted-by fields. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.Titulacion",
+                        "schema": {
+                            "$ref": "#/definitions/Titulacion"
+                        }
+                    },
+                    "403": {}
+                }
+            },
+            "post": {
+                "tags": [
+                    "titulacion"
+                ],
+                "summary": "create Titulacion",
+                "operationId": "TitulacionController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Titulacion content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Titulacion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "models.Titulacion"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/titulacion/{id}": {
+            "get": {
+                "tags": [
+                    "titulacion"
+                ],
+                "summary": "get Titulacion by id",
+                "operationId": "TitulacionController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.Titulacion",
+                        "schema": {
+                            "$ref": "#/definitions/Titulacion"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "titulacion"
+                ],
+                "summary": "update the Titulacion",
+                "operationId": "TitulacionController.Update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Titulacion content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Titulacion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.Titulacion",
+                        "schema": {
+                            "$ref": "#/definitions/Titulacion"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "titulacion"
+                ],
+                "summary": "delete the Titulacion",
+                "operationId": "TitulacionController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Metodologia": {
+            "title": "Metodologia",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "CodigoAbreviacion": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Nombre": {
+                    "type": "string"
+                },
+                "NumeroOrden": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "NivelFormacion": {
+            "title": "NivelFormacion",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "CodigoAbreviacion": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Nombre": {
+                    "type": "string"
+                },
+                "NumeroOrden": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "ProgramaAcademico": {
+            "title": "ProgramaAcademico",
+            "type": "object",
+            "properties": {
+                "CodigoSnies": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Duracion": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Institucion": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Metodologia": {
+                    "$ref": "#/definitions/Metodologia"
+                },
+                "NivelFormacion": {
+                    "$ref": "#/definitions/NivelFormacion"
+                },
+                "Nombre": {
+                    "type": "string"
+                },
+                "Titulacion": {
+                    "$ref": "#/definitions/Titulacion"
+                },
+                "UnidadTiempo": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "Titulacion": {
+            "title": "Titulacion",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "CodigoAbreviacion": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Nombre": {
+                    "type": "string"
+                },
+                "NumeroOrden": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "metodologia",
+            "description": "oprations for Metodologia\n"
+        },
+        {
+            "name": "nivel_formacion",
+            "description": "oprations for NivelFormacion\n"
+        },
+        {
+            "name": "titulacion",
+            "description": "oprations for Titulacion\n"
+        },
+        {
+            "name": "programa_academico",
+            "description": "oprations for ProgramaAcademico\n"
+        }
+    ]
+}
