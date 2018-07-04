@@ -53,7 +53,7 @@ func GetProgramaAcademicoById(id int) (v *ProgramaAcademico, err error) {
 func GetAllProgramaAcademico(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(ProgramaAcademico))
+	qs := o.QueryTable(new(ProgramaAcademico)).RelatedSel()
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
