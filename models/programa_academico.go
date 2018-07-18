@@ -10,15 +10,16 @@ import (
 )
 
 type ProgramaAcademico struct {
-	Id             int             `orm:"column(id);pk;auto"`
-	CodigoSnies    int             `orm:"column(codigo_snies)"`
-	Nombre         string          `orm:"column(nombre)"`
-	Institucion    int             `orm:"column(institucion)"`
-	Metodologia    *Metodologia    `orm:"column(metodologia);rel(fk)"`
-	NivelFormacion *NivelFormacion `orm:"column(nivel_formacion);rel(fk)"`
-	Titulacion     *Titulacion     `orm:"column(titulacion);rel(fk)"`
-	Duracion       float64         `orm:"column(duracion)"`
-	UnidadTiempo   int             `orm:"column(unidad_tiempo)"`
+	Id             						int             `orm:"column(id);pk;auto"`
+	Codigo	       						int             `orm:"column(codigo)"`
+	Nombre         						string          `orm:"column(nombre)"`
+	Institucion    						int             `orm:"column(institucion)"`
+	Metodologia    						*Metodologia    `orm:"column(metodologia);rel(fk)"`
+	NivelFormacion 						*NivelFormacion `orm:"column(nivel_formacion);rel(fk)"`
+	Titulacion     						*Titulacion     `orm:"column(titulacion);rel(fk);null"`
+	Duracion       						float64         `orm:"column(duracion)"`
+	UnidadTiempo             	int             `orm:"column(unidad_tiempo)"`
+	NucleoBasicoConocimiento 	int             `orm:"column(nucleo_basico_conocimiento);null"`
 }
 
 func (t *ProgramaAcademico) TableName() string {
