@@ -10,13 +10,13 @@ import (
 )
 
 type Enfasis struct {
-	Id                int     `orm:"column(id);pk;auto"`
-	Nombre            string  `orm:"column(nombre)"`
-	ProgramaAcademico int     `orm:"column(programa_academico)"`
-	Descripcion       string  `orm:"column(descripcion);null"`
-	CodigoAbreviacion string  `orm:"column(codigo_abreviacion);null"`
-	Activo            bool    `orm:"column(activo)"`
-	NumeroOrden       float64 `orm:"column(numero_orden);null"`
+	Id                int                `orm:"column(id);pk;auto"`
+	Nombre            string             `orm:"column(nombre)"`
+	ProgramaAcademico *ProgramaAcademico `orm:"column(programa_academico);;rel(fk)"`
+	Descripcion       string             `orm:"column(descripcion);null"`
+	CodigoAbreviacion string             `orm:"column(codigo_abreviacion);null"`
+	Activo            bool               `orm:"column(activo)"`
+	NumeroOrden       float64            `orm:"column(numero_orden);null"`
 }
 
 func (t *Enfasis) TableName() string {
@@ -51,7 +51,7 @@ func GetEnfasisById(id int) (v *Enfasis, err error) {
 func GetAllEnfasis(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(Enfasis))
+	qs := o.QueryTable(new(Enfasis)).RelatedSel()
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
