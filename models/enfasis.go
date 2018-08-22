@@ -10,7 +10,7 @@ import (
 )
 
 type Enfasis struct {
-	Id                int     `orm:"column(id);pk"`
+	Id                int     `orm:"column(id);pk;auto"`
 	Nombre            string  `orm:"column(nombre)"`
 	ProgramaAcademico int     `orm:"column(programa_academico)"`
 	Descripcion       string  `orm:"column(descripcion);null"`
