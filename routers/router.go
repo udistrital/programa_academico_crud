@@ -39,6 +39,12 @@ func init() {
 				&controllers.ProgramaAcademicoController{},
 			),
 		),
+
+		beego.NSNamespace("/enfasis",
+			beego.NSInclude(
+				&controllers.EnfasisController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

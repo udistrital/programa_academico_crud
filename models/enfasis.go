@@ -9,57 +9,58 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type ProgramaAcademico struct {
-	Id             						int             `orm:"column(id);pk;auto"`
-	Codigo	       						int             `orm:"column(codigo)"`
-	Nombre         						string          `orm:"column(nombre)"`
-	Institucion    						int             `orm:"column(institucion)"`
-	Metodologia    						*Metodologia    `orm:"column(metodologia);rel(fk)"`
-	NivelFormacion 						*NivelFormacion `orm:"column(nivel_formacion);rel(fk)"`
-	Titulacion     						*Titulacion     `orm:"column(titulacion);rel(fk);null"`
-	Duracion       						float64         `orm:"column(duracion)"`
-	UnidadTiempo             	int             `orm:"column(unidad_tiempo)"`
-	NucleoBasicoConocimiento 	int             `orm:"column(nucleo_basico_conocimiento);null"`
+type Enfasis struct {
+	Id                int                `orm:"column(id);pk;auto"`
+	Nombre            string             `orm:"column(nombre)"`
+	ProgramaAcademico *ProgramaAcademico `orm:"column(programa_academico);;rel(fk)"`
+	Descripcion       string             `orm:"column(descripcion);null"`
+	CodigoAbreviacion string             `orm:"column(codigo_abreviacion);null"`
+	Activo            bool               `orm:"column(activo)"`
+	NumeroOrden       float64            `orm:"column(numero_orden);null"`
 }
 
-func (t *ProgramaAcademico) TableName() string {
-	return "programa_academico"
+func (t *Enfasis) TableName() string {
+	return "enfasis"
 }
 
 func init() {
-	orm.RegisterModel(new(ProgramaAcademico))
+	orm.RegisterModel(new(Enfasis))
 }
 
-// AddProgramaAcademico insert a new ProgramaAcademico into database and returns
+// AddEnfasis insert a new Enfasis into database and returns
 // last inserted Id on success.
-func AddProgramaAcademico(m *ProgramaAcademico) (id int64, err error) {
+func AddEnfasis(m *Enfasis) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetProgramaAcademicoById retrieves ProgramaAcademico by Id. Returns error if
+// GetEnfasisById retrieves Enfasis by Id. Returns error if
 // Id doesn't exist
-func GetProgramaAcademicoById(id int) (v *ProgramaAcademico, err error) {
+func GetEnfasisById(id int) (v *Enfasis, err error) {
 	o := orm.NewOrm()
-	v = &ProgramaAcademico{Id: id}
+	v = &Enfasis{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllProgramaAcademico retrieves all ProgramaAcademico matches certain condition. Returns empty list if
+// GetAllEnfasis retrieves all Enfasis matches certain condition. Returns empty list if
 // no records exist
-func GetAllProgramaAcademico(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllEnfasis(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(ProgramaAcademico)).RelatedSel()
+	qs := o.QueryTable(new(Enfasis)).RelatedSel()
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
 		k = strings.Replace(k, ".", "__", -1)
-		qs = qs.Filter(k, v)
+		if strings.Contains(k, "isnull") {
+			qs = qs.Filter(k, (v == "true" || v == "1"))
+		} else {
+			qs = qs.Filter(k, v)
+		}
 	}
 	// order by:
 	var sortFields []string
@@ -100,7 +101,7 @@ func GetAllProgramaAcademico(query map[string]string, fields []string, sortby []
 		}
 	}
 
-	var l []ProgramaAcademico
+	var l []Enfasis
 	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -123,11 +124,11 @@ func GetAllProgramaAcademico(query map[string]string, fields []string, sortby []
 	return nil, err
 }
 
-// UpdateProgramaAcademico updates ProgramaAcademico by Id and returns error if
+// UpdateEnfasis updates Enfasis by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateProgramaAcademicoById(m *ProgramaAcademico) (err error) {
+func UpdateEnfasisById(m *Enfasis) (err error) {
 	o := orm.NewOrm()
-	v := ProgramaAcademico{Id: m.Id}
+	v := Enfasis{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -138,15 +139,15 @@ func UpdateProgramaAcademicoById(m *ProgramaAcademico) (err error) {
 	return
 }
 
-// DeleteProgramaAcademico deletes ProgramaAcademico by Id and returns error if
+// DeleteEnfasis deletes Enfasis by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteProgramaAcademico(id int) (err error) {
+func DeleteEnfasis(id int) (err error) {
 	o := orm.NewOrm()
-	v := ProgramaAcademico{Id: id}
+	v := Enfasis{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&ProgramaAcademico{Id: id}); err == nil {
+		if num, err = o.Delete(&Enfasis{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

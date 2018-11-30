@@ -9,17 +9,191 @@
             "email": "astaxie@gmail.com"
         },
         "license": {
-            "name": "Url http://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
     "basePath": "/v1",
     "paths": {
+        "/enfasis/": {
+            "get": {
+                "tags": [
+                    "enfasis"
+                ],
+                "description": "get Enfasis",
+                "operationId": "EnfasisController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fields",
+                        "description": "Fields returned. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sortby",
+                        "description": "Sorted-by fields. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enfasis"
+                        }
+                    },
+                    "403": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "enfasis"
+                ],
+                "description": "create Enfasis",
+                "operationId": "EnfasisController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Enfasis content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Enfasis"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "{int} models.Enfasis"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/enfasis/{id}": {
+            "get": {
+                "tags": [
+                    "enfasis"
+                ],
+                "description": "get Enfasis by id",
+                "operationId": "EnfasisController.Get One",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enfasis"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "enfasis"
+                ],
+                "description": "update the Enfasis",
+                "operationId": "EnfasisController.Put",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Enfasis content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Enfasis"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enfasis"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "enfasis"
+                ],
+                "description": "delete the Enfasis",
+                "operationId": "EnfasisController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        },
         "/metodologia/": {
             "get": {
                 "tags": [
                     "metodologia"
                 ],
-                "summary": "get Metodologia",
+                "description": "get Metodologia",
                 "operationId": "MetodologiaController.Get All",
                 "parameters": [
                     {
@@ -61,19 +235,21 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.Metodologia",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Metodologia"
+                            "$ref": "#/definitions/models.Metodologia"
                         }
                     },
-                    "403": {}
+                    "404": {
+                        "description": "not found resource"
+                    }
                 }
             },
             "post": {
                 "tags": [
                     "metodologia"
                 ],
-                "summary": "create Metodologia",
+                "description": "create Metodologia",
                 "operationId": "MetodologiaController.Post",
                 "parameters": [
                     {
@@ -82,16 +258,16 @@
                         "description": "body for Metodologia content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Metodologia"
+                            "$ref": "#/definitions/models.Metodologia"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "models.Metodologia"
+                        "description": "{int} models.Metodologia"
                     },
-                    "403": {
-                        "description": "body is empty"
+                    "400": {
+                        "description": "the request contains incorrect syntax"
                     }
                 }
             }
@@ -101,7 +277,7 @@
                 "tags": [
                     "metodologia"
                 ],
-                "summary": "get Metodologia by id",
+                "description": "get Metodologia by id",
                 "operationId": "MetodologiaController.Get",
                 "parameters": [
                     {
@@ -114,9 +290,9 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.Metodologia",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Metodologia"
+                            "$ref": "#/definitions/models.Metodologia"
                         }
                     },
                     "403": {
@@ -128,7 +304,7 @@
                 "tags": [
                     "metodologia"
                 ],
-                "summary": "update the Metodologia",
+                "description": "update the Metodologia",
                 "operationId": "MetodologiaController.Update",
                 "parameters": [
                     {
@@ -144,15 +320,15 @@
                         "description": "body for Metodologia content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Metodologia"
+                            "$ref": "#/definitions/models.Metodologia"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.Metodologia",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Metodologia"
+                            "$ref": "#/definitions/models.Metodologia"
                         }
                     },
                     "403": {
@@ -164,7 +340,7 @@
                 "tags": [
                     "metodologia"
                 ],
-                "summary": "delete the Metodologia",
+                "description": "delete the Metodologia",
                 "operationId": "MetodologiaController.Delete",
                 "parameters": [
                     {
@@ -177,10 +353,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "delete success!"
+                        "description": "{string} delete success!"
                     },
-                    "403": {
-                        "description": "id is empty"
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             }
@@ -190,7 +366,7 @@
                 "tags": [
                     "nivel_formacion"
                 ],
-                "summary": "get NivelFormacion",
+                "description": "get NivelFormacion",
                 "operationId": "NivelFormacionController.Get All",
                 "parameters": [
                     {
@@ -232,19 +408,21 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.NivelFormacion",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/NivelFormacion"
+                            "$ref": "#/definitions/models.NivelFormacion"
                         }
                     },
-                    "403": {}
+                    "404": {
+                        "description": "not found resource"
+                    }
                 }
             },
             "post": {
                 "tags": [
                     "nivel_formacion"
                 ],
-                "summary": "create NivelFormacion",
+                "description": "create NivelFormacion",
                 "operationId": "NivelFormacionController.Post",
                 "parameters": [
                     {
@@ -253,16 +431,16 @@
                         "description": "body for NivelFormacion content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NivelFormacion"
+                            "$ref": "#/definitions/models.NivelFormacion"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "models.NivelFormacion"
+                        "description": "{int} models.NivelFormacion"
                     },
-                    "403": {
-                        "description": "body is empty"
+                    "400": {
+                        "description": "the request contains incorrect syntax"
                     }
                 }
             }
@@ -272,7 +450,7 @@
                 "tags": [
                     "nivel_formacion"
                 ],
-                "summary": "get NivelFormacion by id",
+                "description": "get NivelFormacion by id",
                 "operationId": "NivelFormacionController.Get",
                 "parameters": [
                     {
@@ -285,9 +463,9 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.NivelFormacion",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/NivelFormacion"
+                            "$ref": "#/definitions/models.NivelFormacion"
                         }
                     },
                     "403": {
@@ -299,7 +477,7 @@
                 "tags": [
                     "nivel_formacion"
                 ],
-                "summary": "update the NivelFormacion",
+                "description": "update the NivelFormacion",
                 "operationId": "NivelFormacionController.Update",
                 "parameters": [
                     {
@@ -315,15 +493,15 @@
                         "description": "body for NivelFormacion content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NivelFormacion"
+                            "$ref": "#/definitions/models.NivelFormacion"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.NivelFormacion",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/NivelFormacion"
+                            "$ref": "#/definitions/models.NivelFormacion"
                         }
                     },
                     "403": {
@@ -335,7 +513,7 @@
                 "tags": [
                     "nivel_formacion"
                 ],
-                "summary": "delete the NivelFormacion",
+                "description": "delete the NivelFormacion",
                 "operationId": "NivelFormacionController.Delete",
                 "parameters": [
                     {
@@ -348,10 +526,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "delete success!"
+                        "description": "{string} delete success!"
                     },
-                    "403": {
-                        "description": "id is empty"
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             }
@@ -361,7 +539,7 @@
                 "tags": [
                     "programa_academico"
                 ],
-                "summary": "get ProgramaAcademico",
+                "description": "get ProgramaAcademico",
                 "operationId": "ProgramaAcademicoController.Get All",
                 "parameters": [
                     {
@@ -403,19 +581,21 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.ProgramaAcademico",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/ProgramaAcademico"
+                            "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     },
-                    "403": {}
+                    "404": {
+                        "description": "not found resource"
+                    }
                 }
             },
             "post": {
                 "tags": [
                     "programa_academico"
                 ],
-                "summary": "create ProgramaAcademico",
+                "description": "create ProgramaAcademico",
                 "operationId": "ProgramaAcademicoController.Post",
                 "parameters": [
                     {
@@ -424,16 +604,16 @@
                         "description": "body for ProgramaAcademico content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ProgramaAcademico"
+                            "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "models.ProgramaAcademico"
+                        "description": "{int} models.ProgramaAcademico"
                     },
-                    "403": {
-                        "description": "body is empty"
+                    "400": {
+                        "description": "the request contains incorrect syntax"
                     }
                 }
             }
@@ -443,7 +623,7 @@
                 "tags": [
                     "programa_academico"
                 ],
-                "summary": "get ProgramaAcademico by id",
+                "description": "get ProgramaAcademico by id",
                 "operationId": "ProgramaAcademicoController.Get",
                 "parameters": [
                     {
@@ -456,9 +636,9 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.ProgramaAcademico",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/ProgramaAcademico"
+                            "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     },
                     "403": {
@@ -470,7 +650,7 @@
                 "tags": [
                     "programa_academico"
                 ],
-                "summary": "update the ProgramaAcademico",
+                "description": "update the ProgramaAcademico",
                 "operationId": "ProgramaAcademicoController.Update",
                 "parameters": [
                     {
@@ -486,15 +666,15 @@
                         "description": "body for ProgramaAcademico content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ProgramaAcademico"
+                            "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.ProgramaAcademico",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/ProgramaAcademico"
+                            "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     },
                     "403": {
@@ -506,7 +686,7 @@
                 "tags": [
                     "programa_academico"
                 ],
-                "summary": "delete the ProgramaAcademico",
+                "description": "delete the ProgramaAcademico",
                 "operationId": "ProgramaAcademicoController.Delete",
                 "parameters": [
                     {
@@ -519,10 +699,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "delete success!"
+                        "description": "{string} delete success!"
                     },
-                    "403": {
-                        "description": "id is empty"
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             }
@@ -532,7 +712,7 @@
                 "tags": [
                     "titulacion"
                 ],
-                "summary": "get Titulacion",
+                "description": "get Titulacion",
                 "operationId": "TitulacionController.Get All",
                 "parameters": [
                     {
@@ -574,19 +754,21 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.Titulacion",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Titulacion"
+                            "$ref": "#/definitions/models.Titulacion"
                         }
                     },
-                    "403": {}
+                    "404": {
+                        "description": "not found resource"
+                    }
                 }
             },
             "post": {
                 "tags": [
                     "titulacion"
                 ],
-                "summary": "create Titulacion",
+                "description": "create Titulacion",
                 "operationId": "TitulacionController.Post",
                 "parameters": [
                     {
@@ -595,16 +777,16 @@
                         "description": "body for Titulacion content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Titulacion"
+                            "$ref": "#/definitions/models.Titulacion"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "models.Titulacion"
+                        "description": "{int} models.Titulacion"
                     },
-                    "403": {
-                        "description": "body is empty"
+                    "400": {
+                        "description": "the request contains incorrect syntax"
                     }
                 }
             }
@@ -614,7 +796,7 @@
                 "tags": [
                     "titulacion"
                 ],
-                "summary": "get Titulacion by id",
+                "description": "get Titulacion by id",
                 "operationId": "TitulacionController.Get",
                 "parameters": [
                     {
@@ -627,9 +809,9 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.Titulacion",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Titulacion"
+                            "$ref": "#/definitions/models.Titulacion"
                         }
                     },
                     "403": {
@@ -641,7 +823,7 @@
                 "tags": [
                     "titulacion"
                 ],
-                "summary": "update the Titulacion",
+                "description": "update the Titulacion",
                 "operationId": "TitulacionController.Update",
                 "parameters": [
                     {
@@ -657,15 +839,15 @@
                         "description": "body for Titulacion content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Titulacion"
+                            "$ref": "#/definitions/models.Titulacion"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.Titulacion",
+                        "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Titulacion"
+                            "$ref": "#/definitions/models.Titulacion"
                         }
                     },
                     "403": {
@@ -677,7 +859,7 @@
                 "tags": [
                     "titulacion"
                 ],
-                "summary": "delete the Titulacion",
+                "description": "delete the Titulacion",
                 "operationId": "TitulacionController.Delete",
                 "parameters": [
                     {
@@ -690,17 +872,46 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "delete success!"
+                        "description": "{string} delete success!"
                     },
-                    "403": {
-                        "description": "id is empty"
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             }
         }
     },
     "definitions": {
-        "Metodologia": {
+        "models.Enfasis": {
+            "title": "Enfasis",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "CodigoAbreviacion": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Nombre": {
+                    "type": "string"
+                },
+                "NumeroOrden": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ProgramaAcademico": {
+                    "$ref": "#/definitions/models.ProgramaAcademico"
+                }
+            }
+        },
+        "models.Metodologia": {
             "title": "Metodologia",
             "type": "object",
             "properties": {
@@ -726,7 +937,7 @@
                 }
             }
         },
-        "NivelFormacion": {
+        "models.NivelFormacion": {
             "title": "NivelFormacion",
             "type": "object",
             "properties": {
@@ -752,11 +963,11 @@
                 }
             }
         },
-        "ProgramaAcademico": {
+        "models.ProgramaAcademico": {
             "title": "ProgramaAcademico",
             "type": "object",
             "properties": {
-                "CodigoSnies": {
+                "Codigo": {
                     "type": "integer",
                     "format": "int64"
                 },
@@ -773,16 +984,20 @@
                     "format": "int64"
                 },
                 "Metodologia": {
-                    "$ref": "#/definitions/Metodologia"
+                    "$ref": "#/definitions/models.Metodologia"
                 },
                 "NivelFormacion": {
-                    "$ref": "#/definitions/NivelFormacion"
+                    "$ref": "#/definitions/models.NivelFormacion"
                 },
                 "Nombre": {
                     "type": "string"
                 },
+                "NucleoBasicoConocimiento": {
+                    "type": "integer",
+                    "format": "int64"
+                },
                 "Titulacion": {
-                    "$ref": "#/definitions/Titulacion"
+                    "$ref": "#/definitions/models.Titulacion"
                 },
                 "UnidadTiempo": {
                     "type": "integer",
@@ -790,7 +1005,7 @@
                 }
             }
         },
-        "Titulacion": {
+        "models.Titulacion": {
             "title": "Titulacion",
             "type": "object",
             "properties": {
@@ -833,6 +1048,10 @@
         {
             "name": "programa_academico",
             "description": "oprations for ProgramaAcademico\n"
+        },
+        {
+            "name": "enfasis",
+            "description": "EnfasisController operations for Enfasis\n"
         }
     ]
 }
