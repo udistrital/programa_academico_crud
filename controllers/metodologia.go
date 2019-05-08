@@ -3,7 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"github.com/udistrital/programa_academico_crud/models"
+	"github.com/planesticud/programa_academico_crud/models"
 	"strconv"
 	"strings"
 

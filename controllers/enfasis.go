@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/udistrital/programa_academico_crud/models"
+	"github.com/planesticud/programa_academico_crud/models"
 	"encoding/json"
 	"errors"
 	"strconv"
