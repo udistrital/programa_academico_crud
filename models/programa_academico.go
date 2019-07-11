@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego/orm"
 )
@@ -20,6 +21,7 @@ type ProgramaAcademico struct {
 	Duracion       						float64         `orm:"column(duracion)"`
 	UnidadTiempo             	int             `orm:"column(unidad_tiempo)"`
 	NucleoBasicoConocimiento 	int             `orm:"column(nucleo_basico_conocimiento);null"`
+	FechaModificacion 			  string          `orm:"column(fecha_modificacion);null"`
 }
 
 func (t *ProgramaAcademico) TableName() string {
@@ -33,6 +35,9 @@ func init() {
 // AddProgramaAcademico insert a new ProgramaAcademico into database and returns
 // last inserted Id on success.
 func AddProgramaAcademico(m *ProgramaAcademico) (id int64, err error) {
+	var t time.Time
+	t = time.Now()
+	m.FechaModificacion = fmt.Sprintf("%s", t.UTC().Format(time.UnixDate))
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
@@ -128,6 +133,9 @@ func GetAllProgramaAcademico(query map[string]string, fields []string, sortby []
 func UpdateProgramaAcademicoById(m *ProgramaAcademico) (err error) {
 	o := orm.NewOrm()
 	v := ProgramaAcademico{Id: m.Id}
+	var t time.Time
+	t = time.Now()
+	m.FechaModificacion = fmt.Sprintf("%s", t.UTC().Format(time.UnixDate))
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64

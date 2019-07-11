@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"encoding/json"
-	"errors"
 	"github.com/planesticud/programa_academico_crud/models"
 	"strconv"
 	"strings"
+	"github.com/fatih/structs"
+	"github.com/udistrital/utils_oas/formatdata"
 
 	"github.com/astaxie/beego"
 )
@@ -34,14 +35,20 @@ func (c *TitulacionController) Post() {
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if _, err := models.AddTitulacion(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = v
+			c.Data["json"] = models.Alert{Type: "success", Code: "S_201", Body: v}
 		} else {
-			beego.Error(err)
-			c.Abort("400")
+			//beego.Error(err)
+			//c.Abort("400")
+			alertdb := structs.Map(err)
+			var code string
+			formatdata.FillStruct(alertdb["Code"], &code)
+			alert := models.Alert{Type: "error", Code: "E_" + code, Body: err.Error()}
+			c.Data["json"] = alert
 		}
 	} else {
-		beego.Error(err)
-		c.Abort("400")
+		//beego.Error(err)
+		//c.Abort("400")
+		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
 	}
 	c.ServeJSON()
 }
@@ -57,7 +64,8 @@ func (c *TitulacionController) GetOne() {
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetTitulacionById(id)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		//c.Data["json"] = err.Error()
+		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
 	} else {
 		c.Data["json"] = v
 	}
@@ -108,7 +116,8 @@ func (c *TitulacionController) GetAll() {
 		for _, cond := range strings.Split(v, ",") {
 			kv := strings.SplitN(cond, ":", 2)
 			if len(kv) != 2 {
-				c.Data["json"] = errors.New("Error: invalid query key/value pair")
+				//c.Data["json"] = errors.New("Error: invalid query key/value pair")
+				c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: "Error: invalid query key/value pair"}
 				c.ServeJSON()
 				return
 			}
@@ -119,8 +128,9 @@ func (c *TitulacionController) GetAll() {
 
 	l, err := models.GetAllTitulacion(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		beego.Error(err)
-		c.Abort("404")
+		//beego.Error(err)
+		//c.Abort("404")
+		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
 	} else {
 		if l == nil {
 			l = append(l, map[string]interface{}{})
@@ -143,12 +153,20 @@ func (c *TitulacionController) Put() {
 	v := models.Titulacion{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateTitulacionById(&v); err == nil {
-			c.Data["json"] = "OK"
+			//c.Data["json"] = "OK"
+			c.Ctx.Output.SetStatus(200)
+			c.Data["json"] = models.Alert{Type: "success", Code: "S_200", Body: v}
 		} else {
-			c.Data["json"] = err.Error()
+			//c.Data["json"] = err.Error()
+			alertdb := structs.Map(err)
+			var code string
+			formatdata.FillStruct(alertdb["Code"], &code)
+			alert := models.Alert{Type: "error", Code: "E_" + code, Body: err.Error()}
+			c.Data["json"] = alert
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		//c.Data["json"] = err.Error()
+		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
 	}
 	c.ServeJSON()
 }
@@ -163,10 +181,12 @@ func (c *TitulacionController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteTitulacion(id); err == nil {
-		c.Data["json"] = map[string]interface{}{"Id": id}
+		//c.Data["json"] = map[string]interface{}{"Id": id}
+		c.Data["json"] = models.Alert{Type: "success", Code: "S_200", Body: "OK"}
 	} else {
-		beego.Error(err)
-		c.Abort("404")
+		//beego.Error(err)
+		//c.Abort("404")
+		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
 	}
 	c.ServeJSON()
 }
