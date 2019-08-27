@@ -2,14 +2,11 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/planesticud/programa_academico_crud/models"
 	"strconv"
 	"strings"
 
-	"github.com/fatih/structs"
-	"github.com/udistrital/utils_oas/formatdata"
-
 	"github.com/astaxie/beego"
+	"github.com/planesticud/programa_academico_crud/models"
 )
 
 // oprations for NivelFormacion
@@ -25,6 +22,7 @@ func (c *NivelFormacionController) URLMapping() {
 	c.Mapping("Delete", c.Delete)
 }
 
+// Post ...
 // @Title Post
 // @Description create NivelFormacion
 // @Param	body		body 	models.NivelFormacion	true		"body for NivelFormacion content"
@@ -36,26 +34,24 @@ func (c *NivelFormacionController) Post() {
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if _, err := models.AddNivelFormacion(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
-			//c.Data["json"] = v
-			c.Data["json"] = models.Alert{Type: "success", Code: "S_201", Body: v}
+			c.Data["json"] = v
 		} else {
-			//beego.Error(err)
-			//c.Abort("400")
-			alertdb := structs.Map(err)
-			var code string
-			formatdata.FillStruct(alertdb["Code"], &code)
-			alert := models.Alert{Type: "error", Code: "E_" + code, Body: err.Error()}
-			c.Data["json"] = alert
+			beego.Error(err)
+			//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+			c.Data["system"] = err
+			c.Abort("400")
 		}
 	} else {
-		//beego.Error(err)
-		//c.Abort("400")
-		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
+		beego.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+		c.Data["system"] = err
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
 
-// @Title Get
+// GetOne ...
+// @Title Get One
 // @Description get NivelFormacion by id
 // @Param	id		path 	string	true		"The key for staticblock"
 // @Success 200 {object} models.NivelFormacion
@@ -66,14 +62,17 @@ func (c *NivelFormacionController) GetOne() {
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetNivelFormacionById(id)
 	if err != nil {
-		//c.Data["json"] = err.Error()
-		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
+		beego.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
+		c.Data["system"] = err
+		c.Abort("404")
 	} else {
 		c.Data["json"] = v
 	}
 	c.ServeJSON()
 }
 
+// GetAll ...
 // @Title Get All
 // @Description get NivelFormacion
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
@@ -89,9 +88,9 @@ func (c *NivelFormacionController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
-	var query map[string]string = make(map[string]string)
+	var query = make(map[string]string)
 	var limit int64 = 10
-	var offset int64 = 0
+	var offset int64
 
 	// fields: col1,col2,entity.col3
 	if v := c.GetString("fields"); v != "" {
@@ -118,7 +117,6 @@ func (c *NivelFormacionController) GetAll() {
 		for _, cond := range strings.Split(v, ",") {
 			kv := strings.SplitN(cond, ":", 2)
 			if len(kv) != 2 {
-				//c.Data["json"] = errors.New("Error: invalid query key/value pair")
 				c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: "Error: invalid query key/value pair"}
 				c.ServeJSON()
 				return
@@ -130,9 +128,10 @@ func (c *NivelFormacionController) GetAll() {
 
 	l, err := models.GetAllNivelFormacion(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		//beego.Error(err)
-		//c.Abort("404")
-		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
+		beego.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
+		c.Data["system"] = err
+		c.Abort("404")
 	} else {
 		if l == nil {
 			l = append(l, map[string]interface{}{})
@@ -142,7 +141,8 @@ func (c *NivelFormacionController) GetAll() {
 	c.ServeJSON()
 }
 
-// @Title Update
+// Put ...
+// @Title Put
 // @Description update the NivelFormacion
 // @Param	id		path 	string	true		"The id you want to update"
 // @Param	body		body 	models.NivelFormacion	true		"body for NivelFormacion content"
@@ -155,24 +155,24 @@ func (c *NivelFormacionController) Put() {
 	v := models.NivelFormacion{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateNivelFormacionById(&v); err == nil {
-			//c.Data["json"] = "OK"
 			c.Ctx.Output.SetStatus(200)
-			c.Data["json"] = models.Alert{Type: "success", Code: "S_200", Body: v}
+			c.Data["json"] = v
 		} else {
-			//c.Data["json"] = err.Error()
-			alertdb := structs.Map(err)
-			var code string
-			formatdata.FillStruct(alertdb["Code"], &code)
-			alert := models.Alert{Type: "error", Code: "E_" + code, Body: err.Error()}
-			c.Data["json"] = alert
+			beego.Error(err)
+			//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+			c.Data["System"] = err
+			c.Abort("400")
 		}
 	} else {
-		//c.Data["json"] = err.Error()
-		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
+		beego.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+		c.Data["System"] = err
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
 
+// Delete ...
 // @Title Delete
 // @Description delete the NivelFormacion
 // @Param	id		path 	string	true		"The id you want to delete"
@@ -183,12 +183,12 @@ func (c *NivelFormacionController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteNivelFormacion(id); err == nil {
-		//c.Data["json"] = map[string]interface{}{"Id": id}
-		c.Data["json"] = models.Alert{Type: "success", Code: "S_200", Body: "OK"}
+		c.Data["json"] = map[string]interface{}{"Id": id}
 	} else {
-		//beego.Error(err)
-		//c.Abort("404")
-		c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: err.Error()}
+		beego.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
+		c.Data["System"] = err
+		c.Abort("404")
 	}
 	c.ServeJSON()
 }

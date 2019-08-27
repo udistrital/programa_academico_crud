@@ -105,7 +105,7 @@
                     "metodologia"
                 ],
                 "description": "get Metodologia by id",
-                "operationId": "MetodologiaController.Get",
+                "operationId": "MetodologiaController.Get One",
                 "parameters": [
                     {
                         "in": "path",
@@ -122,8 +122,8 @@
                             "$ref": "#/definitions/models.Metodologia"
                         }
                     },
-                    "403": {
-                        "description": ":id is empty"
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             },
@@ -132,7 +132,7 @@
                     "metodologia"
                 ],
                 "description": "update the Metodologia",
-                "operationId": "MetodologiaController.Update",
+                "operationId": "MetodologiaController.Put",
                 "parameters": [
                     {
                         "in": "path",
@@ -158,8 +158,8 @@
                             "$ref": "#/definitions/models.Metodologia"
                         }
                     },
-                    "403": {
-                        "description": ":id is not int"
+                    "400": {
+                        "description": "the request contains incorrect syntax"
                     }
                 }
             },
@@ -278,7 +278,7 @@
                     "nivel_formacion"
                 ],
                 "description": "get NivelFormacion by id",
-                "operationId": "NivelFormacionController.Get",
+                "operationId": "NivelFormacionController.Get One",
                 "parameters": [
                     {
                         "in": "path",
@@ -305,7 +305,7 @@
                     "nivel_formacion"
                 ],
                 "description": "update the NivelFormacion",
-                "operationId": "NivelFormacionController.Update",
+                "operationId": "NivelFormacionController.Put",
                 "parameters": [
                     {
                         "in": "path",
@@ -413,8 +413,8 @@
                             "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     },
-                    "404": {
-                        "description": "not found resource"
+                    "400": {
+                        "description": "the request contains incorrect syntax"
                     }
                 }
             },
@@ -451,7 +451,7 @@
                     "programa_academico"
                 ],
                 "description": "get ProgramaAcademico by id",
-                "operationId": "ProgramaAcademicoController.Get",
+                "operationId": "ProgramaAcademicoController.Get One",
                 "parameters": [
                     {
                         "in": "path",
@@ -468,8 +468,8 @@
                             "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     },
-                    "403": {
-                        "description": ":id is empty"
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             },
@@ -478,7 +478,7 @@
                     "programa_academico"
                 ],
                 "description": "update the ProgramaAcademico",
-                "operationId": "ProgramaAcademicoController.Update",
+                "operationId": "ProgramaAcademicoController.Put",
                 "parameters": [
                     {
                         "in": "path",
@@ -504,8 +504,8 @@
                             "$ref": "#/definitions/models.ProgramaAcademico"
                         }
                     },
-                    "403": {
-                        "description": ":id is not int"
+                    "400": {
+                        "description": "the request contains incorrect syntax"
                     }
                 }
             },
@@ -624,7 +624,7 @@
                     "titulacion"
                 ],
                 "description": "get Titulacion by id",
-                "operationId": "TitulacionController.Get",
+                "operationId": "TitulacionController.Get One",
                 "parameters": [
                     {
                         "in": "path",
@@ -641,8 +641,8 @@
                             "$ref": "#/definitions/models.Titulacion"
                         }
                     },
-                    "403": {
-                        "description": ":id is empty"
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             },
@@ -651,7 +651,7 @@
                     "titulacion"
                 ],
                 "description": "update the Titulacion",
-                "operationId": "TitulacionController.Update",
+                "operationId": "TitulacionController.Put",
                 "parameters": [
                     {
                         "in": "path",
@@ -722,6 +722,9 @@
                 "Descripcion": {
                     "type": "string"
                 },
+                "FechaCreacion": {
+                    "type": "string"
+                },
                 "FechaModificacion": {
                     "type": "string"
                 },
@@ -751,6 +754,9 @@
                 "Descripcion": {
                     "type": "string"
                 },
+                "FechaCreacion": {
+                    "type": "string"
+                },
                 "FechaModificacion": {
                     "type": "string"
                 },
@@ -778,6 +784,9 @@
                 "Duracion": {
                     "type": "number",
                     "format": "double"
+                },
+                "FechaCreacion": {
+                    "type": "string"
                 },
                 "FechaModificacion": {
                     "type": "string"
@@ -825,6 +834,9 @@
                 "Descripcion": {
                     "type": "string"
                 },
+                "FechaCreacion": {
+                    "type": "string"
+                },
                 "FechaModificacion": {
                     "type": "string"
                 },
@@ -853,7 +865,7 @@
         },
         {
             "name": "titulacion",
-            "description": "oprations for Titulacion\n"
+            "description": "TitulacionController operations for Titulacion\n"
         },
         {
             "name": "programa_academico",
