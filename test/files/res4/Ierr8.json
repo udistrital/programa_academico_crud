@@ -1,0 +1,24 @@
+{
+	"Development": null,
+	"Message": "The request contains incorrect syntax",
+	"Status": "400",
+	"System": {
+		"Severity": "ERROR",
+		"Code": "23505",
+		"Message": "llave duplicada viola restricción de unicidad «pk_titulacion»",
+		"Detail": "Ya existe la llave (id)=(24254).",
+		"Hint": "",
+		"Position": "",
+		"InternalPosition": "",
+		"InternalQuery": "",
+		"Where": "",
+		"Schema": "programa_academico",
+		"Table": "titulacion",
+		"Column": "",
+		"DataTypeName": "",
+		"Constraint": "pk_titulacion",
+		"File": "nbtinsert.c",
+		"Line": "434",
+		"Routine": "_bt_check_unique"
+	}
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Example Schema",
+  "type": "object",
+  "properties": {
+    "Id": { "type": "integer" },
+    "Nombre": { "type": "string" },
+    "Codigo":	{ "type": "integer" },
+    "Institucion":	{ "type": "integer" },
+    "Metodologia":	{ "type": "Metodologia" },
+    "NivelFormacion":	{ "type": "NivelFormacion" },
+    "Titulacion":	{ "type": "Titulacion" },
+    "Duracion":	{ "type": "integer" },
+    "UnidadTiempo":	{ "type": "integer" },
+    "NucleoBasicoConocimiento":	{ "type": "integer" },
+    "FechaCreacion": { "type": "string" },
+    "FechaModificacion": { "type": "string" }
+  }
+}

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/planesticud/programa_academico_crud/models"
 )
 
@@ -37,13 +38,13 @@ func (c *TitulacionController) Post() {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = v
 		} else {
-			beego.Error(err)
+			logs.Error(err)
 			//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
 			c.Data["system"] = err
 			c.Abort("400")
 		}
 	} else {
-		beego.Error(err)
+		logs.Error(err)
 		//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
 		c.Data["system"] = err
 		c.Abort("400")
@@ -63,7 +64,7 @@ func (c *TitulacionController) GetOne() {
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetTitulacionById(id)
 	if err != nil {
-		beego.Error(err)
+		logs.Error(err)
 		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
 		c.Data["system"] = err
 		c.Abort("404")
@@ -130,7 +131,7 @@ func (c *TitulacionController) GetAll() {
 
 	l, err := models.GetAllTitulacion(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		beego.Error(err)
+		logs.Error(err)
 		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
 		c.Data["system"] = err
 		c.Abort("404")
@@ -160,13 +161,13 @@ func (c *TitulacionController) Put() {
 			c.Ctx.Output.SetStatus(200)
 			c.Data["json"] = v
 		} else {
-			beego.Error(err)
+			logs.Error(err)
 			//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
 			c.Data["System"] = err
 			c.Abort("400")
 		}
 	} else {
-		beego.Error(err)
+		logs.Error(err)
 		//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
 		c.Data["System"] = err
 		c.Abort("400")
@@ -187,7 +188,7 @@ func (c *TitulacionController) Delete() {
 	if err := models.DeleteTitulacion(id); err == nil {
 		c.Data["json"] = map[string]interface{}{"Id": id}
 	} else {
-		beego.Error(err)
+		logs.Error(err)
 		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
 		c.Data["System"] = err
 		c.Abort("404")

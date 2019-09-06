@@ -1,0 +1,6 @@
+projectKey=pl:programa_academico_crud:0.01
+serverUrl=http://sonarqube.planestic.udistrital.edu.co:9000
+serverVersion=7.0.0.36138
+dashboardUrl=http://sonarqube.planestic.udistrital.edu.co:9000/dashboard/index/pl:programa_academico_crud:0.01
+ceTaskId=AWz4WJlTm7yxM-XuGrMd
+ceTaskUrl=http://sonarqube.planestic.udistrital.edu.co:9000/api/ce/task?id=AWz4WJlTm7yxM-XuGrMd
