@@ -7,19 +7,22 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego/orm"
+	"github.com/udistrital/utils_oas/time_bogota"
 )
 
 type ProgramaAcademico struct {
-	Id             						int             `orm:"column(id);pk;auto"`
-	Codigo	       						int             `orm:"column(codigo)"`
-	Nombre         						string          `orm:"column(nombre)"`
-	Institucion    						int             `orm:"column(institucion)"`
-	Metodologia    						*Metodologia    `orm:"column(metodologia);rel(fk)"`
-	NivelFormacion 						*NivelFormacion `orm:"column(nivel_formacion);rel(fk)"`
-	Titulacion     						*Titulacion     `orm:"column(titulacion);rel(fk);null"`
-	Duracion       						float64         `orm:"column(duracion)"`
-	UnidadTiempo             	int             `orm:"column(unidad_tiempo)"`
-	NucleoBasicoConocimiento 	int             `orm:"column(nucleo_basico_conocimiento);null"`
+	Id                       int             `orm:"column(id);pk;auto"`
+	Codigo                   int             `orm:"column(codigo)"`
+	Nombre                   string          `orm:"column(nombre)"`
+	Institucion              int             `orm:"column(institucion)"`
+	Metodologia              *Metodologia    `orm:"column(metodologia);rel(fk)"`
+	NivelFormacion           *NivelFormacion `orm:"column(nivel_formacion);rel(fk)"`
+	Titulacion               *Titulacion     `orm:"column(titulacion);rel(fk);null"`
+	Duracion                 float64         `orm:"column(duracion)"`
+	UnidadTiempo             int             `orm:"column(unidad_tiempo)"`
+	NucleoBasicoConocimiento int             `orm:"column(nucleo_basico_conocimiento);null"`
+	FechaCreacion            string          `orm:"column(fecha_creacion);null"`
+	FechaModificacion        string          `orm:"column(fecha_modificacion);null"`
 }
 
 func (t *ProgramaAcademico) TableName() string {
@@ -33,6 +36,8 @@ func init() {
 // AddProgramaAcademico insert a new ProgramaAcademico into database and returns
 // last inserted Id on success.
 func AddProgramaAcademico(m *ProgramaAcademico) (id int64, err error) {
+	m.FechaCreacion = time_bogota.TiempoBogotaFormato()
+	m.FechaModificacion = time_bogota.TiempoBogotaFormato()
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
@@ -128,10 +133,11 @@ func GetAllProgramaAcademico(query map[string]string, fields []string, sortby []
 func UpdateProgramaAcademicoById(m *ProgramaAcademico) (err error) {
 	o := orm.NewOrm()
 	v := ProgramaAcademico{Id: m.Id}
+	m.FechaModificacion = time_bogota.TiempoBogotaFormato()
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Update(m); err == nil {
+		if num, err = o.Update(m, "Codigo", "Nombre", "Institucion", "Metodologia", "NivelFormacion", "Titulacion", "Duracion", "UnidadTiempo", "NucleoBasicoConocimiento", "FechaModificacion"); err == nil {
 			fmt.Println("Number of records updated in database:", num)
 		}
 	}

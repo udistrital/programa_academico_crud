@@ -2,19 +2,20 @@ package controllers
 
 import (
 	"encoding/json"
-	"errors"
-	"github.com/udistrital/programa_academico_crud/models"
 	"strconv"
 	"strings"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
+	"github.com/planesticud/programa_academico_crud/models"
 )
 
-// oprations for Titulacion
+//TitulacionController operations for Titulacion
 type TitulacionController struct {
 	beego.Controller
 }
 
+// URLMapping ...
 func (c *TitulacionController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
@@ -23,6 +24,7 @@ func (c *TitulacionController) URLMapping() {
 	c.Mapping("Delete", c.Delete)
 }
 
+// Post ...
 // @Title Post
 // @Description create Titulacion
 // @Param	body		body 	models.Titulacion	true		"body for Titulacion content"
@@ -36,34 +38,43 @@ func (c *TitulacionController) Post() {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = v
 		} else {
-			beego.Error(err)
+			logs.Error(err)
+			//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+			c.Data["system"] = err
 			c.Abort("400")
 		}
 	} else {
-		beego.Error(err)
+		logs.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+		c.Data["system"] = err
 		c.Abort("400")
 	}
 	c.ServeJSON()
 }
 
-// @Title Get
+// GetOne ...
+// @Title Get One
 // @Description get Titulacion by id
 // @Param	id		path 	string	true		"The key for staticblock"
 // @Success 200 {object} models.Titulacion
-// @Failure 403 :id is empty
+// @Failure 404 not found resource
 // @router /:id [get]
 func (c *TitulacionController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetTitulacionById(id)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
+		c.Data["system"] = err
+		c.Abort("404")
 	} else {
 		c.Data["json"] = v
 	}
 	c.ServeJSON()
 }
 
+// GetAll ...
 // @Title Get All
 // @Description get Titulacion
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
@@ -79,9 +90,9 @@ func (c *TitulacionController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
-	var query map[string]string = make(map[string]string)
+	var query = make(map[string]string)
 	var limit int64 = 10
-	var offset int64 = 0
+	var offset int64
 
 	// fields: col1,col2,entity.col3
 	if v := c.GetString("fields"); v != "" {
@@ -108,7 +119,8 @@ func (c *TitulacionController) GetAll() {
 		for _, cond := range strings.Split(v, ",") {
 			kv := strings.SplitN(cond, ":", 2)
 			if len(kv) != 2 {
-				c.Data["json"] = errors.New("Error: invalid query key/value pair")
+				//c.Data["json"] = errors.New("Error: invalid query key/value pair")
+				c.Data["json"] = models.Alert{Type: "error", Code: "E_400", Body: "Error: invalid query key/value pair"}
 				c.ServeJSON()
 				return
 			}
@@ -119,7 +131,9 @@ func (c *TitulacionController) GetAll() {
 
 	l, err := models.GetAllTitulacion(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		beego.Error(err)
+		logs.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
+		c.Data["system"] = err
 		c.Abort("404")
 	} else {
 		if l == nil {
@@ -130,7 +144,8 @@ func (c *TitulacionController) GetAll() {
 	c.ServeJSON()
 }
 
-// @Title Update
+// Put ...
+// @Title Put
 // @Description update the Titulacion
 // @Param	id		path 	string	true		"The id you want to update"
 // @Param	body		body 	models.Titulacion	true		"body for Titulacion content"
@@ -143,16 +158,24 @@ func (c *TitulacionController) Put() {
 	v := models.Titulacion{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateTitulacionById(&v); err == nil {
-			c.Data["json"] = "OK"
+			c.Ctx.Output.SetStatus(200)
+			c.Data["json"] = v
 		} else {
-			c.Data["json"] = err.Error()
+			logs.Error(err)
+			//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+			c.Data["System"] = err
+			c.Abort("400")
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "400", "Body": err.Error(), "Type": "error"}
+		c.Data["System"] = err
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
 
+// Delete ...
 // @Title Delete
 // @Description delete the Titulacion
 // @Param	id		path 	string	true		"The id you want to delete"
@@ -165,7 +188,9 @@ func (c *TitulacionController) Delete() {
 	if err := models.DeleteTitulacion(id); err == nil {
 		c.Data["json"] = map[string]interface{}{"Id": id}
 	} else {
-		beego.Error(err)
+		logs.Error(err)
+		//c.Data["development"] = map[string]interface{}{"Code": "404", "Body": err.Error(), "Type": "error"}
+		c.Data["System"] = err
 		c.Abort("404")
 	}
 	c.ServeJSON()

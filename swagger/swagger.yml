@@ -11,121 +11,6 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /v1
 paths:
-  /enfasis/:
-    get:
-      tags:
-      - enfasis
-      description: get Enfasis
-      operationId: EnfasisController.Get All
-      parameters:
-      - in: query
-        name: query
-        description: Filter. e.g. col1:v1,col2:v2 ...
-        type: string
-      - in: query
-        name: fields
-        description: Fields returned. e.g. col1,col2 ...
-        type: string
-      - in: query
-        name: sortby
-        description: Sorted-by fields. e.g. col1,col2 ...
-        type: string
-      - in: query
-        name: order
-        description: Order corresponding to each sortby field, if single value, apply
-          to all sortby fields. e.g. desc,asc ...
-        type: string
-      - in: query
-        name: limit
-        description: Limit the size of result set. Must be an integer
-        type: string
-      - in: query
-        name: offset
-        description: Start position of result set. Must be an integer
-        type: string
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Enfasis'
-        "403":
-          description: ""
-    post:
-      tags:
-      - enfasis
-      description: create Enfasis
-      operationId: EnfasisController.Post
-      parameters:
-      - in: body
-        name: body
-        description: body for Enfasis content
-        required: true
-        schema:
-          $ref: '#/definitions/models.Enfasis'
-      responses:
-        "201":
-          description: '{int} models.Enfasis'
-        "403":
-          description: body is empty
-  /enfasis/{id}:
-    get:
-      tags:
-      - enfasis
-      description: get Enfasis by id
-      operationId: EnfasisController.Get One
-      parameters:
-      - in: path
-        name: id
-        description: The key for staticblock
-        required: true
-        type: string
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Enfasis'
-        "403":
-          description: :id is empty
-    put:
-      tags:
-      - enfasis
-      description: update the Enfasis
-      operationId: EnfasisController.Put
-      parameters:
-      - in: path
-        name: id
-        description: The id you want to update
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: body for Enfasis content
-        required: true
-        schema:
-          $ref: '#/definitions/models.Enfasis'
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Enfasis'
-        "403":
-          description: :id is not int
-    delete:
-      tags:
-      - enfasis
-      description: delete the Enfasis
-      operationId: EnfasisController.Delete
-      parameters:
-      - in: path
-        name: id
-        description: The id you want to delete
-        required: true
-        type: string
-      responses:
-        "200":
-          description: '{string} delete success!'
-        "403":
-          description: id is empty
   /metodologia/:
     get:
       tags:
@@ -187,7 +72,7 @@ paths:
       tags:
       - metodologia
       description: get Metodologia by id
-      operationId: MetodologiaController.Get
+      operationId: MetodologiaController.Get One
       parameters:
       - in: path
         name: id
@@ -199,13 +84,13 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/models.Metodologia'
-        "403":
-          description: :id is empty
+        "404":
+          description: not found resource
     put:
       tags:
       - metodologia
       description: update the Metodologia
-      operationId: MetodologiaController.Update
+      operationId: MetodologiaController.Put
       parameters:
       - in: path
         name: id
@@ -223,8 +108,8 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/models.Metodologia'
-        "403":
-          description: :id is not int
+        "400":
+          description: the request contains incorrect syntax
     delete:
       tags:
       - metodologia
@@ -302,7 +187,7 @@ paths:
       tags:
       - nivel_formacion
       description: get NivelFormacion by id
-      operationId: NivelFormacionController.Get
+      operationId: NivelFormacionController.Get One
       parameters:
       - in: path
         name: id
@@ -320,7 +205,7 @@ paths:
       tags:
       - nivel_formacion
       description: update the NivelFormacion
-      operationId: NivelFormacionController.Update
+      operationId: NivelFormacionController.Put
       parameters:
       - in: path
         name: id
@@ -393,8 +278,8 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/models.ProgramaAcademico'
-        "404":
-          description: not found resource
+        "400":
+          description: the request contains incorrect syntax
     post:
       tags:
       - programa_academico
@@ -417,7 +302,7 @@ paths:
       tags:
       - programa_academico
       description: get ProgramaAcademico by id
-      operationId: ProgramaAcademicoController.Get
+      operationId: ProgramaAcademicoController.Get One
       parameters:
       - in: path
         name: id
@@ -429,13 +314,13 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/models.ProgramaAcademico'
-        "403":
-          description: :id is empty
+        "404":
+          description: not found resource
     put:
       tags:
       - programa_academico
       description: update the ProgramaAcademico
-      operationId: ProgramaAcademicoController.Update
+      operationId: ProgramaAcademicoController.Put
       parameters:
       - in: path
         name: id
@@ -453,8 +338,8 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/models.ProgramaAcademico'
-        "403":
-          description: :id is not int
+        "400":
+          description: the request contains incorrect syntax
     delete:
       tags:
       - programa_academico
@@ -532,7 +417,7 @@ paths:
       tags:
       - titulacion
       description: get Titulacion by id
-      operationId: TitulacionController.Get
+      operationId: TitulacionController.Get One
       parameters:
       - in: path
         name: id
@@ -544,13 +429,13 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/models.Titulacion'
-        "403":
-          description: :id is empty
+        "404":
+          description: not found resource
     put:
       tags:
       - titulacion
       description: update the Titulacion
-      operationId: TitulacionController.Update
+      operationId: TitulacionController.Put
       parameters:
       - in: path
         name: id
@@ -587,26 +472,6 @@ paths:
         "404":
           description: not found resource
 definitions:
-  models.Enfasis:
-    title: Enfasis
-    type: object
-    properties:
-      Activo:
-        type: boolean
-      CodigoAbreviacion:
-        type: string
-      Descripcion:
-        type: string
-      Id:
-        type: integer
-        format: int64
-      Nombre:
-        type: string
-      NumeroOrden:
-        type: number
-        format: double
-      ProgramaAcademico:
-        $ref: '#/definitions/models.ProgramaAcademico'
   models.Metodologia:
     title: Metodologia
     type: object
@@ -616,6 +481,10 @@ definitions:
       CodigoAbreviacion:
         type: string
       Descripcion:
+        type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
         type: string
       Id:
         type: integer
@@ -635,6 +504,10 @@ definitions:
         type: string
       Descripcion:
         type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
+        type: string
       Id:
         type: integer
         format: int64
@@ -653,6 +526,10 @@ definitions:
       Duracion:
         type: number
         format: double
+      FechaCreacion:
+        type: string
+      FechaModificacion:
+        type: string
       Id:
         type: integer
         format: int64
@@ -683,6 +560,10 @@ definitions:
         type: string
       Descripcion:
         type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
+        type: string
       Id:
         type: integer
         format: int64
@@ -700,10 +581,7 @@ tags:
     oprations for NivelFormacion
 - name: titulacion
   description: |
-    oprations for Titulacion
+    TitulacionController operations for Titulacion
 - name: programa_academico
   description: |
     oprations for ProgramaAcademico
-- name: enfasis
-  description: |
-    EnfasisController operations for Enfasis

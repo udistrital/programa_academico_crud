@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"github.com/udistrital/programa_academico_crud/controllers"
+	"github.com/planesticud/programa_academico_crud/controllers"
 
 	"github.com/astaxie/beego"
 )
@@ -37,12 +37,6 @@ func init() {
 		beego.NSNamespace("/programa_academico",
 			beego.NSInclude(
 				&controllers.ProgramaAcademicoController{},
-			),
-		),
-
-		beego.NSNamespace("/enfasis",
-			beego.NSInclude(
-				&controllers.EnfasisController{},
 			),
 		),
 	)
