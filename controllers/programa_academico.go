@@ -7,7 +7,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-	"github.com/planesticud/programa_academico_crud/models"
+	"github.com/udistrital/programa_academico_crud/models"
 )
 
 // oprations for ProgramaAcademico
