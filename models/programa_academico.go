@@ -21,6 +21,7 @@ type ProgramaAcademico struct {
 	Duracion                 float64         `orm:"column(duracion)"`
 	UnidadTiempo             int             `orm:"column(unidad_tiempo)"`
 	NucleoBasicoConocimiento int             `orm:"column(nucleo_basico_conocimiento);null"`
+	Activo            			 bool    				 `orm:"column(activo)"`
 	FechaCreacion            string          `orm:"column(fecha_creacion);null"`
 	FechaModificacion        string          `orm:"column(fecha_modificacion);null"`
 }
@@ -137,7 +138,7 @@ func UpdateProgramaAcademicoById(m *ProgramaAcademico) (err error) {
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Update(m, "Codigo", "Nombre", "Institucion", "Metodologia", "NivelFormacion", "Titulacion", "Duracion", "UnidadTiempo", "NucleoBasicoConocimiento", "FechaModificacion"); err == nil {
+		if num, err = o.Update(m, "Codigo", "Nombre", "Institucion", "Metodologia", "NivelFormacion", "Titulacion", "Duracion", "UnidadTiempo", "NucleoBasicoConocimiento", "Activo", "FechaModificacion"); err == nil {
 			fmt.Println("Number of records updated in database:", num)
 		}
 	}

@@ -520,6 +520,8 @@ definitions:
     title: ProgramaAcademico
     type: object
     properties:
+      Activo:
+        type: boolean
       Codigo:
         type: integer
         format: int64
