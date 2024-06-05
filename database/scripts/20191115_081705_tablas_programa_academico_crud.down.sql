@@ -1,0 +1,1 @@
+DROP SCHEMA IF EXISTS programa_academico CASCADE;
